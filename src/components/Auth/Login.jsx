@@ -17,8 +17,8 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(formData);
-
+      const response = await login(formData);
+      console.log(response);
       toast.success("Login Success");
       navigate("/");
     } catch (error) {

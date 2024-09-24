@@ -6,7 +6,7 @@ import Info from "./Info";
 
 const Sidebar = ({ sidebarOpen, toggleSidebar }) => {
   const { user, logout } = useContext(AuthContext);
-  // console.log(user);
+  console.log(user);
 
   return (
     <div
