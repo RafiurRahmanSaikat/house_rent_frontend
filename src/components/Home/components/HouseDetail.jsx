@@ -29,6 +29,7 @@ const HouseDetail = () => {
   );
   // console.log(user?.user?.id);
   // console.log(house?.house?.owner?.user?.id);
+
   const {
     data: reviews,
     loading: reviewsLoading,
@@ -38,7 +39,7 @@ const HouseDetail = () => {
     {},
     [refresh, advertiseId]
   );
-  // console.log("object", house);
+  console.log("object", house);
 
   const handleRentRequest = async (advertisementId) => {
     console.log(advertisementId);
