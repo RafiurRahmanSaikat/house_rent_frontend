@@ -25,7 +25,7 @@ const About = () => {
             </div>
             <div className="mt-12 md:mt-0">
               <img
-                src="/src/assets/about.jpg"
+                src="/assets/about.jpg"
                 alt="About Us Image"
                 className="object-cover rounded-lg shadow-md"
               />

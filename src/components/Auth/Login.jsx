@@ -95,7 +95,7 @@ function Login() {
         <div className="md:block hidden w-1/2">
           <img
             className="rounded-2xl object-cover h-full"
-            src="/src/assets/bg.jpg"
+            src="/assets/bg.jpg"
             alt="Login Illustration"
           />
         </div>

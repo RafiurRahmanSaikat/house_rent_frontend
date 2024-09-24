@@ -5,7 +5,7 @@ const Hero = () => {
     <div className="relative w-full h-[40vh]" id="home">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-3xl">
         <img
-          src="/src/assets/bg.jpg"
+          src="/assets/bg.jpg"
           alt="Beautiful house"
           className="object-cover w-full h-full"
         />
