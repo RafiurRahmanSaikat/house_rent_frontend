@@ -64,7 +64,6 @@ const HouseDetail = () => {
         ? toast.error("You have to login !!")
         : toast.error(error.message);
       // toast.error(error.response.data.error || "Rent request failed");
-      setRefresh((prev) => !prev);
     }
   };
   const handleReviewSubmit = async (e) => {
@@ -95,7 +94,7 @@ const HouseDetail = () => {
       error.status == 401
         ? toast.error("You have to login !!")
         : toast.error(error.message);
-      setRefresh((prev) => !prev);
+
       // console.error("Error submitting review:", error);
     }
   };

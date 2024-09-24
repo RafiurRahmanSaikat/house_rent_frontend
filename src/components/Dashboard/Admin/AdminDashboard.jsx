@@ -19,7 +19,6 @@ const AdminDashboard = ({ data, token, error, loading, onRefresh }) => {
     } catch (error) {
       // console.error("Failed to Approve:", error);
       toast.error(error.message);
-      onRefresh();
     }
   };
 

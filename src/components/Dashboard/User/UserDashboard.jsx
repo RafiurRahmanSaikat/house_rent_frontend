@@ -21,8 +21,6 @@ const UserDashboard = ({ data, token, error, loading, onRefresh }) => {
       error.status == 401
         ? toast.error("You have to login !!")
         : toast.error("Failed to create the advertisement.");
-
-      onRefresh();
     }
   };
 
