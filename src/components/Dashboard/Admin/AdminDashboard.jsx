@@ -10,7 +10,7 @@ const AdminDashboard = ({ data, token, error, loading, onRefresh }) => {
   const handleApproveAdvertisement = async (houseId) => {
     try {
       await axios.post(
-        "http://127.0.0.1:8000/house/approve-advertisement/",
+        "https://house-rent-backend.onrender.com/house/approve-advertisement/",
         { house_id: houseId },
         { headers: { Authorization: `Token ${token}` } }
       );

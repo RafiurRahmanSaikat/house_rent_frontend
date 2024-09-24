@@ -17,7 +17,7 @@ const Favourite = () => {
         const responses = await Promise.all(
           ids.map((id) =>
             axios.get(
-              `http://127.0.0.1:8000/house/favorites_advertisements/${id}/`,
+              `https://house-rent-backend.onrender.com/house/favorites_advertisements/${id}/`,
               {},
               {
                 headers: {
@@ -40,7 +40,7 @@ const Favourite = () => {
     console.log(adId);
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/account/profile/favorites/remove/${adId}/`,
+        `https://house-rent-backend.onrender.com/account/profile/favorites/remove/${adId}/`,
         {},
         {
           headers: {

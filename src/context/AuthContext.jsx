@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const loadUserInfo = async (token) => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/account/profile/",
+        "https://house-rent-backend.onrender.com/account/profile/",
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/account/login/",
+        "https://house-rent-backend.onrender.com/account/login/",
         credentials
       );
       const { token } = response.data;
@@ -62,11 +62,14 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.get("http://127.0.0.1:8000/account/logout/", {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      });
+      await axios.get(
+        "https://house-rent-backend.onrender.com/account/logout/",
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setUser(null);
       localStorage.removeItem("token");
       setIsAuthenticated(false);

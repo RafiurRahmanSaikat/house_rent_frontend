@@ -21,7 +21,7 @@ const AddHouse = () => {
     data: categories,
     loading,
     error,
-  } = useFetch("http://127.0.0.1:8000/house/category/");
+  } = useFetch("https://house-rent-backend.onrender.com/house/category/");
 
   // console.log({ user });
   // console.log(categories, user, "Add House Form");
@@ -67,7 +67,7 @@ const AddHouse = () => {
     // console.log(formDataToSend);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/house/list/",
+        "https://house-rent-backend.onrender.com/house/list/",
         formDataToSend,
         {
           headers: {

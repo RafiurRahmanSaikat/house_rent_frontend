@@ -9,7 +9,7 @@ import Loading from "../../core/Loading";
 const RentRequestList = () => {
   const [refresh, setRefresh] = useState(false);
   const { data, loading, error } = useFetch(
-    "http://127.0.0.1:8000/house/show-rent/",
+    "https://house-rent-backend.onrender.com/house/show-rent/",
     {
       headers: {
         Authorization: `Token ${localStorage.getItem("token")}`,
@@ -21,7 +21,7 @@ const RentRequestList = () => {
   const handleAccept = async (id) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/house/accept-rent-request/${id}/`,
+        `https://house-rent-backend.onrender.com/house/accept-rent-request/${id}/`,
         {
           method: "POST",
           headers: {

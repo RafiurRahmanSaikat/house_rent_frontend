@@ -15,7 +15,7 @@ const EditHouse = () => {
     data: categories,
     loading: categoriesLoading,
     error: categoriesError,
-  } = useFetch("http://127.0.0.1:8000/house/category/");
+  } = useFetch("https://house-rent-backend.onrender.com/house/category/");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -31,7 +31,7 @@ const EditHouse = () => {
     const fetchData = async () => {
       try {
         const house = await axios.get(
-          `http://127.0.0.1:8000/house/list/${id}/`
+          `https://house-rent-backend.onrender.com/house/list/${id}/`
         );
         setFormData({
           title: house.data.title,
@@ -92,7 +92,7 @@ const EditHouse = () => {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/house/list/${id}/`,
+        `https://house-rent-backend.onrender.com/house/list/${id}/`,
         formDataToSend,
         {
           headers: {

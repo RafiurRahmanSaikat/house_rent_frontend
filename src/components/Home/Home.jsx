@@ -9,8 +9,9 @@ import ContactUs from "./components/ContactUs";
 import Services from "./components/Services";
 
 const Home = () => {
-  const houseUrl = "http://127.0.0.1:8000/house/list/";
-  const advertisementUrl = "http://127.0.0.1:8000/house/advertisements/list/";
+  const houseUrl = "https://house-rent-backend.onrender.com/house/list/";
+  const advertisementUrl =
+    "https://house-rent-backend.onrender.com/house/advertisements/list/";
   const { data: houses, loading, error } = useFetch(houseUrl);
   const { data: advertise } = useFetch(advertisementUrl);
   let advertisements = advertise?.results;

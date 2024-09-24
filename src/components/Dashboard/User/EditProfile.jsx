@@ -46,7 +46,7 @@ const EditProfile = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/account/updateProfile/",
+        "https://house-rent-backend.onrender.com/account/updateProfile/",
         formData,
         {
           headers: {
@@ -77,7 +77,7 @@ const EditProfile = () => {
     }
     try {
       await axios.post(
-        "http://127.0.0.1:8000/account/change-password/",
+        "https://house-rent-backend.onrender.com/account/change-password/",
         {
           current_password: password.current_password,
           new_password: password.new_password,
@@ -117,7 +117,7 @@ const EditProfile = () => {
                   src={
                     profileImage
                       ? URL.createObjectURL(profileImage)
-                      : `http://127.0.0.1:8000${user?.image}`
+                      : `https://house-rent-backend.onrender.com${user?.image}`
                   }
                   alt="Profile"
                   className="w-32 h-32 rounded-full object-cover"

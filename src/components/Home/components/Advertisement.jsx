@@ -11,8 +11,9 @@ const Advertisement = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const categoriesUrl = "http://127.0.0.1:8000/house/category/";
-  const advertisementUrl = `http://127.0.0.1:8000/house/advertisements/list/${
+  const categoriesUrl =
+    "https://house-rent-backend.onrender.com/house/category/";
+  const advertisementUrl = `https://house-rent-backend.onrender.com/house/advertisements/list/${
     selectedCategory ? `?category=${selectedCategory}` : ""
   }`;
 
@@ -36,7 +37,7 @@ const Advertisement = () => {
   const handleleFavorite = async (adId) => {
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/account/profile/favorites/add/${adId}/`,
+        `https://house-rent-backend.onrender.com/account/profile/favorites/add/${adId}/`,
         {},
         {
           headers: {

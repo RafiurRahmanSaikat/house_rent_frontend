@@ -23,7 +23,7 @@ const HouseDetail = () => {
     loading: houseLoading,
     error: houseError,
   } = useFetch(
-    `http://127.0.0.1:8000/house/advertisements/list/${advertiseId}/`,
+    `https://house-rent-backend.onrender.com/house/advertisements/list/${advertiseId}/`,
     {},
     [refresh, advertiseId]
   );
@@ -34,7 +34,7 @@ const HouseDetail = () => {
     loading: reviewsLoading,
     error: reviewsError,
   } = useFetch(
-    `http://127.0.0.1:8000/house/review/?advertisement=${advertiseId}`,
+    `https://house-rent-backend.onrender.com/house/review/?advertisement=${advertiseId}`,
     {},
     [refresh, advertiseId]
   );
@@ -44,7 +44,7 @@ const HouseDetail = () => {
     console.log(advertisementId);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/house/request-rent/",
+        "https://house-rent-backend.onrender.com/house/request-rent/",
         {
           advertisement: advertisementId,
         },
@@ -72,7 +72,7 @@ const HouseDetail = () => {
     try {
       // console.log(reviewText, rating, advertiseId);
       const response = await axios.post(
-        "http://127.0.0.1:8000/house/review/",
+        "https://house-rent-backend.onrender.com/house/review/",
         {
           advertisement: advertiseId,
           rating: rating,

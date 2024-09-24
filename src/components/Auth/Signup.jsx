@@ -11,11 +11,15 @@ const Signup = () => {
     const formData = new FormData(event.target);
 
     try {
-      await axios.post("http://127.0.0.1:8000/account/register/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        "https://house-rent-backend.onrender.com/account/register/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       toast.info("Check Your Email to Activate Account");
 
       navigate("/login");
