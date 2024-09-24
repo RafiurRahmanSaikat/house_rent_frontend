@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
+import EmptyState from "../../core/EmptyState";
 
 const Favourite = () => {
   const [houses, setHouses] = useState([]);
@@ -57,6 +58,7 @@ const Favourite = () => {
       toast.error("Error Deleting favorite. Please try again.");
     }
   };
+  if houses.length == 0 return <EmptyState text={"Favourite House"}/>
   return (
     <div className="flex flex-col items-center ">
       <div className="text-center p-10">
