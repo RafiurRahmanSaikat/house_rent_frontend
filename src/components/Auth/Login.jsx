@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 function Login() {
   const { login } = useContext(AuthContext);
@@ -8,7 +7,6 @@ function Login() {
     username: "",
     password: "",
   });
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,13 +15,9 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(formData);
-      console.log(response);
-      toast.success("Login Success");
-      navigate("/");
+      await login(formData);
     } catch (error) {
-      // console.error(error);
-      toast.error(error.message);
+      console.error(error);
     }
   };
 

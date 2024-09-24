@@ -1,9 +1,11 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
-
+const navigate = useNavigate();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
@@ -52,7 +54,10 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", token);
       setIsAuthenticated(true);
       await loadUserInfo(token);
+      toast.success("Login successful!");
+      navigate("/");
     } catch (error) {
+      toast.error("An error occurred during login.");
       console.error("Error logging in:", error);
       setError(
         error.response ? error.response.data : "An error occurred during login."
@@ -73,6 +78,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       localStorage.removeItem("token");
       setIsAuthenticated(false);
+      toast.error("Logout Success.");
       window.location.href = "/login";
     } catch (error) {
       console.error("Error during logout:", error);
