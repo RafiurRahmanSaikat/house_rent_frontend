@@ -58,7 +58,7 @@ const AdminDashboard = ({ data, token, error, loading, onRefresh }) => {
               </td>
 
               <td className="text-sm text-justify px-3">
-                {house.house.description.split(" ").slice(0, 50).join(" ") +
+                {item?.house?.description.split(" ").slice(0, 50).join(" ") +
                   "..."}
                 {/* {item.house?.description.length > 250
                   ? `${item.house?.description.substring(0, 250)}...`
