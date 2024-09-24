@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
 import EmptyState from "../../core/EmptyState";
+import Loading from "../../core/Loading";
 
 const Favourite = () => {
   const [houses, setHouses] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { user } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   const ids = user?.favourites || [];
@@ -16,6 +18,7 @@ const Favourite = () => {
   useEffect(() => {
     const fetchHouses = async () => {
       try {
+        setLoading(true);
         const responses = await Promise.all(
           ids.map((id) =>
             axios.get(
@@ -29,6 +32,7 @@ const Favourite = () => {
           )
         );
         setHouses(responses.map((response) => response.data));
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching houses:", error);
       }
@@ -58,7 +62,10 @@ const Favourite = () => {
       toast.error("Error Deleting favorite. Please try again.");
     }
   };
-  if houses.length == 0 return <EmptyState text={"Favourite House"}/>
+  if (loading) return <Loading />;
+
+  if (houses.length === 0) return <EmptyState text={"Favourite House"} />;
+
   return (
     <div className="flex flex-col items-center ">
       <div className="text-center p-10">
