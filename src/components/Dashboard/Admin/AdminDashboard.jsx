@@ -27,7 +27,7 @@ const AdminDashboard = ({ data, token, error, loading, onRefresh }) => {
   if (!data || data.length === 0) return <EmptyState />;
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-auto">
       <table className="min-w-full bg-white border border-gray-300 shadow-sm rounded-lg overflow-hidden">
         <thead className="bg-gray-50">
           <tr>
@@ -43,7 +43,7 @@ const AdminDashboard = ({ data, token, error, loading, onRefresh }) => {
             ].map((header) => (
               <th
                 key={header}
-                className="px-3 py-2 text-center text-xs font-extrabold text-red-500 uppercase tracking-wider"
+                className="p-1 text-center text-xs font-extrabold text-red-500 uppercase tracking-wider"
               >
                 {header}
               </th>
@@ -53,11 +53,11 @@ const AdminDashboard = ({ data, token, error, loading, onRefresh }) => {
         <tbody className="divide-y divide-gray-200">
           {data?.map((item) => (
             <tr key={item?.id} className="hover:bg-gray-50">
-              <td className="px-3 py-2 whitespace-nowrap text-sm text-center font-medium text-gray-900">
+              <td className="p-1  text-sm text font-medium text-gray-900">
                 {item?.house?.title}
               </td>
 
-              <td className="text-sm text-justify px-3">
+              <td className="text-sm  px-3">
                 {item.house?.description.substring(0, 100)} ...
               </td>
               <td className="px-3 py-2 whitespace-nowrap text-sm text-center text-gray-500">
