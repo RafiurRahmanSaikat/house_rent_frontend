@@ -75,7 +75,7 @@ const Favourite = () => {
               <img
                 src={house.house.image}
                 alt={house.house.title}
-                className=" object-cover rounded-t-xl"
+                className=" object-cover rounded-t-xl w-full"
               />
               <div className="px-4 py-3 w-auto">
                 <div className="">
