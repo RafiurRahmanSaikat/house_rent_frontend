@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
 
 import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
-const navigate = useNavigate();
+
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       await loadUserInfo(token);
       toast.success("Login successful!");
-      navigate("/");
+      window.location.href = "/";
     } catch (error) {
       toast.error("An error occurred during login.");
       console.error("Error logging in:", error);
