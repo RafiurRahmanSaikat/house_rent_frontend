@@ -9,6 +9,7 @@ const Favourite = () => {
   const [houses, setHouses] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const { user } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
   const ids = user?.favourites || [];
 
   useEffect(() => {
@@ -18,10 +19,9 @@ const Favourite = () => {
           ids.map((id) =>
             axios.get(
               `https://house-rent-backend.onrender.com/house/favorites_advertisements/${id}/`,
-              {},
               {
                 headers: {
-                  Authorization: `Token ${localStorage.getItem("token")}`,
+                  Authorization: `Token ${token}`,
                 },
               }
             )
@@ -69,13 +69,13 @@ const Favourite = () => {
         {houses.map((house) => (
           <div
             key={house.id}
-            className="w-auto  bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+            className="min-w-[22vw] mx-8   bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
           >
             <a href="#">
               <img
                 src={house.house.image}
                 alt={house.house.title}
-                className="h-80 w-72 object-cover rounded-t-xl"
+                className=" object-cover rounded-t-xl"
               />
               <div className="px-4 py-3 w-auto">
                 <div className="">
@@ -130,9 +130,11 @@ const Favourite = () => {
                   <span className=" font-medium">Title : </span>
                   {house.house.title}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 overflow-y-clip">
                   <span className=" font-medium">Description : </span>
-                  {house.house.description}
+
+                  {house.house.description.split(" ").slice(0, 50).join(" ") +
+                    "..."}
                 </p>
                 <div className="flex items-center">
                   <p className="text-lg font-semibold text-black cursor-auto my-3">
