@@ -28,7 +28,7 @@ function Login() {
         <div className="md:w-1/2 px-8">
           <h2 className="text-4xl font-bold text-[#002D74] mb-4">Login</h2>
           {/* <h2 className="text-2xl font-bold text-[#741500] mb-4">
-            Confirm password
+            Confirm Password
           </h2>
           */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">

@@ -50,11 +50,11 @@ export const AuthProvider = ({ children }) => {
         "https://house-rent-backend.onrender.com/account/login/",
         credentials
       );
+      toast.success("Login successful!");
       const { token } = response.data;
       localStorage.setItem("token", token);
       setIsAuthenticated(true);
       await loadUserInfo(token);
-      toast.success("Login successful!");
       window.location.href = "/";
     } catch (error) {
       toast.error("An error occurred during login.");
