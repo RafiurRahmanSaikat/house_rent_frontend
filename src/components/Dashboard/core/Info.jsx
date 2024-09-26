@@ -6,7 +6,7 @@ const Info = ({ data, logout }) => {
       <div className=" flex flex-col items-center  ">
         <img
           alt={data?.image}
-          src={`https://house-rent-backend.onrender.com${data?.image}`}
+          src={data?.image}
           className="size-16 rounded-full object-cover"
         />
 

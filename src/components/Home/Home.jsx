@@ -1,4 +1,5 @@
 import React from "react";
+import backEndApi from "../../utils/constant";
 import useFetch from "../../utils/useFetch";
 import ErrorPage from "../core/ErrorPage";
 import Hero from "../core/Hero";
@@ -9,9 +10,8 @@ import ContactUs from "./components/ContactUs";
 import Services from "./components/Services";
 
 const Home = () => {
-  const houseUrl = "https://house-rent-backend.onrender.com/house/list/";
-  const advertisementUrl =
-    "https://house-rent-backend.onrender.com/house/advertisements/list/";
+  const houseUrl = `${backEndApi}/house/list/`;
+  const advertisementUrl = `${backEndApi}/house/advertisements/list/`;
   const { data: houses, loading, error } = useFetch(houseUrl);
   const { data: advertise } = useFetch(advertisementUrl);
   let advertisements = advertise?.results;

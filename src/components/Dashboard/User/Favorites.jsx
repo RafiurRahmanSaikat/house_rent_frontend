@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
+import backEndApi from "../../../utils/constant";
 import EmptyState from "../../core/EmptyState";
 import Loading from "../../core/Loading";
 
@@ -21,14 +22,11 @@ const Favourite = () => {
         setLoading(true);
         const responses = await Promise.all(
           ids.map((id) =>
-            axios.get(
-              `https://house-rent-backend.onrender.com/house/favorites_advertisements/${id}/`,
-              {
-                headers: {
-                  Authorization: `Token ${token}`,
-                },
-              }
-            )
+            axios.get(`${backEndApi}/house/favorites_advertisements/${id}/`, {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            })
           )
         );
         setHouses(responses.map((response) => response.data));
@@ -45,7 +43,7 @@ const Favourite = () => {
     console.log(adId);
     try {
       const response = await axios.post(
-        `https://house-rent-backend.onrender.com/account/profile/favorites/remove/${adId}/`,
+        `${backEndApi}/account/profile/favorites/remove/${adId}/`,
         {},
         {
           headers: {

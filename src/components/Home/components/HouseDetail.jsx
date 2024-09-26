@@ -5,6 +5,7 @@ import { AiFillStar, AiOutlineUser } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
+import backEndApi from "../../../utils/constant";
 import useFetch from "../../../utils/useFetch";
 import EmptyState from "../../core/EmptyState";
 import ErrorPage from "../../core/ErrorPage";
@@ -22,11 +23,10 @@ const HouseDetail = () => {
     data: house,
     loading: houseLoading,
     error: houseError,
-  } = useFetch(
-    `https://house-rent-backend.onrender.com/house/advertisements/list/${advertiseId}/`,
-    {},
-    [refresh, advertiseId]
-  );
+  } = useFetch(`${backEndApi}/house/advertisements/list/${advertiseId}/`, {}, [
+    refresh,
+    advertiseId,
+  ]);
   // console.log(user?.user?.id);
   // console.log(house?.house?.owner?.user?.id);
 
@@ -34,18 +34,17 @@ const HouseDetail = () => {
     data: reviews,
     loading: reviewsLoading,
     error: reviewsError,
-  } = useFetch(
-    `https://house-rent-backend.onrender.com/house/review/?advertisement=${advertiseId}`,
-    {},
-    [refresh, advertiseId]
-  );
+  } = useFetch(`${backEndApi}/house/review/?advertisement=${advertiseId}`, {}, [
+    refresh,
+    advertiseId,
+  ]);
   console.log("object", house);
 
   const handleRentRequest = async (advertisementId) => {
     console.log(advertisementId);
     try {
       const response = await axios.post(
-        "https://house-rent-backend.onrender.com/house/request-rent/",
+        `${backEndApi}/house/request-rent/`,
         {
           advertisement: advertisementId,
         },
@@ -72,7 +71,7 @@ const HouseDetail = () => {
     try {
       // console.log(reviewText, rating, advertiseId);
       const response = await axios.post(
-        "https://house-rent-backend.onrender.com/house/review/",
+        `${backEndApi}/house/review/`,
         {
           advertisement: advertiseId,
           rating: rating,

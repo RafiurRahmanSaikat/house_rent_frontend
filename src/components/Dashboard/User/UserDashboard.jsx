@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import backEndApi from "../../../utils/constant";
 import EmptyState from "../../core/EmptyState";
 import ErrorPage from "../../core/ErrorPage";
 import Loading from "../../core/Loading";
@@ -11,7 +12,7 @@ const UserDashboard = ({ data, token, error, loading, onRefresh }) => {
   const handleCreateAdvertisement = async (houseId) => {
     try {
       await axios.post(
-        "https://house-rent-backend.onrender.com/house/create-advertisement/",
+        `${backEndApi}/house/create-advertisement/`,
         { house_id: houseId },
         { headers: { Authorization: `Token ${token}` } }
       );

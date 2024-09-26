@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import EmptyState from "../../core/EmptyState";
 import ErrorPage from "../../core/ErrorPage";
 import Loading from "../../core/Loading";
+import backEndApi from "../../../utils/constant";
 
 const AdminDashboard = ({ data, token, error, loading, onRefresh }) => {
   console.log("Admin", data);
   const handleApproveAdvertisement = async (houseId) => {
     try {
       await axios.post(
-        "https://house-rent-backend.onrender.com/house/approve-advertisement/",
+        `${backEndApi}/house/approve-advertisement/`,
         { house_id: houseId },
         { headers: { Authorization: `Token ${token}` } }
       );

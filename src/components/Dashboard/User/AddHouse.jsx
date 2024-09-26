@@ -2,18 +2,19 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
+import backEndApi from "../../../utils/constant";
 import useFetch from "../../../utils/useFetch";
 import ErrorPage from "../../core/ErrorPage";
 import Loading from "../../core/Loading";
 
 const AddHouse = () => {
-  const { isAuthenticated, user } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     location: "",
     price: "",
-    image: null,
     category: [],
   });
 
@@ -21,17 +22,11 @@ const AddHouse = () => {
     data: categories,
     loading,
     error,
-  } = useFetch("https://house-rent-backend.onrender.com/house/category/");
+  } = useFetch(`${backEndApi}/house/category/`);
 
-  // console.log({ user });
-  // console.log(categories, user, "Add House Form");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
   };
 
   const handleCategoryChange = (e) => {
@@ -40,56 +35,88 @@ const AddHouse = () => {
       (option) => option.value
     );
     setFormData({ ...formData, category: selectedCategories });
-    // console.log(formData);
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setImage({
+        file: selectedFile,
+        preview: URL.createObjectURL(selectedFile),
+      });
+    } else {
+      setImage(null);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!isAuthenticated) {
       toast.error("User is not authenticated.");
       return;
     }
 
     const authToken = localStorage.getItem("token");
-    const formDataToSend = new FormData();
 
-    for (const key in formData) {
-      if (key === "category") {
-        formData[key].forEach((categoryId) =>
-          formDataToSend.append("category_ids", categoryId)
+    if (image) {
+      const imgBBApiKey = "1852d1780a7c1d17aff8afe66b4878a8";
+      const imgFormData = new FormData();
+      imgFormData.append("image", image.file);
+
+      try {
+        const imgbbResponse = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${imgBBApiKey}`,
+          imgFormData
         );
-      } else if (key === "image" && formData[key]) {
-        formDataToSend.append(key, formData[key]);
-      } else {
-        formDataToSend.append(key, formData[key]);
-      }
-    }
-    // console.log(formDataToSend);
-    try {
-      const response = await axios.post(
-        "https://house-rent-backend.onrender.com/house/list/",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Token ${authToken}`,
-          },
+        const imageUrlFromImgBB = imgbbResponse.data.data.url;
+
+        const formDataToSend = new FormData();
+        formDataToSend.append("image", imageUrlFromImgBB);
+
+        for (const key in formData) {
+          if (key === "category") {
+            formData[key].forEach((categoryId) =>
+              formDataToSend.append("category_ids", categoryId)
+            );
+          } else {
+            formDataToSend.append(key, formData[key]);
+          }
         }
-      );
-      toast.success("House added successfully");
-      // console.log("Response:", response.data);
-      setFormData({
-        title: "",
-        description: "",
-        location: "",
-        price: "",
-        image: null,
-        category: [],
-      });
-    } catch (error) {
-      error.status == 401
-        ? toast.error("You have to login !!")
-        : toast.error(error.message);
+
+        try {
+          const response = await axios.post(
+            `${backEndApi}/house/list/`,
+            formDataToSend,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Token ${authToken}`,
+              },
+            }
+          );
+          toast.success("House added successfully");
+
+          setFormData({
+            title: "",
+            description: "",
+            location: "",
+            price: "",
+            category: [],
+          });
+          setImage(null);
+        } catch (error) {
+          toast.error(
+            error.response && error.response.status === 401
+              ? "You have to login !!"
+              : error.message
+          );
+        }
+      } catch (error) {
+        toast.error("Failed to upload image to ImgBB.");
+      }
+    } else {
+      toast.error("Please upload an image.");
     }
   };
 
@@ -196,6 +223,15 @@ const AddHouse = () => {
                 className="block w-full text-sm text-gray-500 border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 rounded-md"
               />
             </div>
+            {image && image.preview && (
+              <div className="mt-4">
+                <img
+                  src={image.preview}
+                  alt="House preview"
+                  className="w-64 h-40 object-cover rounded-md"
+                />
+              </div>
+            )}
           </div>
           <div className="sm:col-span-2">
             <label
@@ -209,6 +245,7 @@ const AddHouse = () => {
                 name="category"
                 id="category"
                 multiple
+                value={formData.category}
                 onChange={handleCategoryChange}
                 className="block w-full text-sm text-gray-900 border-0 px-3.5 py-2 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 rounded-md"
               >

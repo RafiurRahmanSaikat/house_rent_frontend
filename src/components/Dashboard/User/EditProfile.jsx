@@ -4,17 +4,19 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
+import backEndApi from "../../../utils/constant";
 
 const EditProfile = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const [preview, setPreview] = useState(user.image);
   const [profileData, setProfileData] = useState({
     first_name: user.user.first_name,
     last_name: user.user.last_name,
     email: user.user.email,
     mobile_number: user.mobile_number,
     address: user.address,
+    image: user.image,
   });
 
   const [password, setPassword] = useState({
@@ -23,30 +25,48 @@ const EditProfile = () => {
     confirm_password: "",
   });
 
-  const [profileImage, setProfileImage] = useState(null);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData({ ...profileData, [name]: value });
   };
 
   const handleProfileImageChange = (e) => {
-    setProfileImage(e.target.files[0]);
+    const file = e.target.files[0];
+    setPreview(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+
+    let imageUrlToSend = profileData.image;
+
+    if (preview) {
+      const imgBBApiKey = "1852d1780a7c1d17aff8afe66b4878a8";
+      const imgFormData = new FormData();
+      imgFormData.append("image", preview);
+
+      try {
+        const imgbbResponse = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${imgBBApiKey}`,
+          imgFormData
+        );
+        imageUrlToSend = imgbbResponse.data.data.url;
+      } catch (error) {
+        toast.error("Failed to upload image to ImgBB.");
+        return;
+      }
+    }
+
     for (const key in profileData) {
       formData.append(key, profileData[key]);
     }
-    if (profileImage) {
-      formData.append("image", profileImage);
-    }
+
+    formData.append("image", imageUrlToSend);
 
     try {
       const response = await axios.post(
-        "https://house-rent-backend.onrender.com/account/updateProfile/",
+        `${backEndApi}/account/updateProfile/`,
         formData,
         {
           headers: {
@@ -69,6 +89,7 @@ const EditProfile = () => {
     const { name, value } = e.target;
     setPassword({ ...password, [name]: value });
   };
+
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     if (password.new_password !== password.confirm_password) {
@@ -76,8 +97,8 @@ const EditProfile = () => {
       return;
     }
     try {
-      await axios.post(
-        "https://house-rent-backend.onrender.com/account/change-password/",
+      const response = await axios.post(
+        `${backEndApi}/account/change-password/`,
         {
           current_password: password.current_password,
           new_password: password.new_password,
@@ -98,7 +119,6 @@ const EditProfile = () => {
         confirm_password: "",
       });
     } catch (error) {
-      // console.error("Error changing password:", error);
       toast.error(error.message);
     }
   };
@@ -115,13 +135,13 @@ const EditProfile = () => {
               <div className="relative">
                 <img
                   src={
-                    profileImage
-                      ? URL.createObjectURL(profileImage)
-                      : `https://house-rent-backend.onrender.com${user?.image}`
+                    preview && preview.type
+                      ? URL.createObjectURL(preview)
+                      : `${profileData.image}`
                   }
-                  alt="Profile"
-                  className="w-32 h-32 rounded-full object-cover"
-                />
+                  alt="House"
+                  className="w-48 h-48 rounded-full object-cover"
+                />{" "}
                 <label
                   htmlFor="upload_profile"
                   className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-2 cursor-pointer"

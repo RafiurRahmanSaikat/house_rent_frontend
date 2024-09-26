@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import React, { createContext, useEffect, useState } from "react";
+import backEndApi from "../utils/constant";
 
 export const AuthContext = createContext();
 
@@ -14,14 +15,11 @@ export const AuthProvider = ({ children }) => {
 
   const loadUserInfo = async (token) => {
     try {
-      const response = await axios.get(
-        "https://house-rent-backend.onrender.com/account/profile/",
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${backEndApi}/account/profile/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
       setIsAuthenticated(true);
       setUser(response.data);
     } catch (error) {
@@ -47,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await axios.post(
-        "https://house-rent-backend.onrender.com/account/login/",
+        `${backEndApi}/account/login/`,
         credentials
       );
       toast.success("Login successful!");
@@ -67,14 +65,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.get(
-        "https://house-rent-backend.onrender.com/account/logout/",
-        {
-          headers: {
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      await axios.get(`${backEndApi}/account/logout/`, {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      });
       setUser(null);
       localStorage.removeItem("token");
       setIsAuthenticated(false);

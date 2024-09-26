@@ -3,6 +3,7 @@ import { ChevronDown, Clock, Home, MapPin } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import backEndApi from "../../../utils/constant";
 import useFetch from "../../../utils/useFetch";
 import ErrorPage from "../../core/ErrorPage";
 import Loading from "../../core/Loading";
@@ -11,9 +12,8 @@ const Advertisement = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const categoriesUrl =
-    "https://house-rent-backend.onrender.com/house/category/";
-  const advertisementUrl = `https://house-rent-backend.onrender.com/house/advertisements/list/${
+  const categoriesUrl = `${backEndApi}/house/category/`;
+  const advertisementUrl = `${backEndApi}/house/advertisements/list/${
     selectedCategory ? `?category=${selectedCategory}` : ""
   }`;
 
@@ -37,7 +37,7 @@ const Advertisement = () => {
   const handleleFavorite = async (adId) => {
     try {
       const response = await axios.post(
-        `https://house-rent-backend.onrender.com/account/profile/favorites/add/${adId}/`,
+        `${backEndApi}/account/profile/favorites/add/${adId}/`,
         {},
         {
           headers: {

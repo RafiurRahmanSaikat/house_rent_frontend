@@ -2,6 +2,7 @@ import { Menu } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import backEndApi from "../../../utils/constant";
 import useFetch from "../../../utils/useFetch";
 import Loading from "../../core/Loading";
 import AdminDashboard from "../Admin/AdminDashboard";
@@ -16,8 +17,8 @@ const Dashboard = () => {
 
   const url =
     user?.account_type === "User"
-      ? "https://house-rent-backend.onrender.com/house/my-houses/"
-      : "https://house-rent-backend.onrender.com/house/admin-house-list/";
+      ? `${backEndApi}/house/my-houses/`
+      : `${backEndApi}/house/admin-house-list/`;
 
   const { data, loading, error } = useFetch(
     url,
